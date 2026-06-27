@@ -1,38 +1,66 @@
-from modelos.producto import Producto
-from modelos.cliente import Cliente
-from servicios.restaurante import Restaurante
+# Sistema básico de restaurante usando POO
+
+class Producto:
+    def __init__(self, nombre, precio, categoria, disponible):
+        self.nombre = nombre
+        self.precio = precio
+        self.categoria = categoria
+        self.disponible = disponible
+
+    def mostrar_informacion(self):
+        estado = "Disponible" if self.disponible else "Agotado"
+        return f"{self.nombre} - ${self.precio} - {self.categoria} - {estado}"
 
 
-def main():
+class Cliente:
+    def __init__(self, nombre, edad, telefono, cliente_frecuente):
+        self.nombre = nombre
+        self.edad = edad
+        self.telefono = telefono
+        self.cliente_frecuente = cliente_frecuente
 
-    # Crear restaurante
-    restaurante = Restaurante("Marisquería El Delfín")
-
-    # Crear productos
-    producto1 = Producto("Ceviche de Camarón", "Mariscos", 8.50)
-    producto2 = Producto("Arroz Marinero", "Mariscos", 10.00)
-    producto3 = Producto("Encocado de Pescado", "Mariscos", 9.50)
-
-    # Crear clientes
-    cliente1 = Cliente("Ricardo Cando", "0991234567")
-    cliente2 = Cliente("María López", "0987654321")
-
-    # Registrar productos
-    restaurante.registrar_producto(producto1)
-    restaurante.registrar_producto(producto2)
-    restaurante.registrar_producto(producto3)
-
-    # Registrar clientes
-    restaurante.registrar_cliente(cliente1)
-    restaurante.registrar_cliente(cliente2)
-
-    # Mostrar información
-    print("===== SISTEMA DE GESTIÓN DE RESTAURANTE =====")
-    print("Nombre del restaurante:", restaurante.nombre)
-
-    restaurante.mostrar_productos()
-    restaurante.mostrar_clientes()
+    def mostrar_informacion(self):
+        tipo = "Cliente frecuente" if self.cliente_frecuente else "Cliente nuevo"
+        return f"{self.nombre} - {self.edad} años - {self.telefono} - {tipo}"
 
 
-if __name__ == "__main__":
-    main()
+class Restaurante:
+    def __init__(self):
+        self.productos = []
+        self.clientes = []
+
+    def agregar_producto(self, producto):
+        self.productos.append(producto)
+
+    def agregar_cliente(self, cliente):
+        self.clientes.append(cliente)
+
+    def mostrar_datos(self):
+        print("\n--- PRODUCTOS ---")
+        for producto in self.productos:
+            print(producto.mostrar_informacion())
+
+        print("\n--- CLIENTES ---")
+        for cliente in self.clientes:
+            print(cliente.mostrar_informacion())
+
+
+# Programa principal
+
+restaurante = Restaurante()
+
+producto1 = Producto("Pizza", 12.50, "Comida", True)
+producto2 = Producto("Gaseosa", 2.00, "Bebida", True)
+
+cliente1 = Cliente("Ricardo", 21, "225069511", True)
+cliente2 = Cliente("Carlos", 30, "0985212452", False)
+
+
+restaurante.agregar_producto(producto1)
+restaurante.agregar_producto(producto2)
+
+restaurante.agregar_cliente(cliente1)
+restaurante.agregar_cliente(cliente2)
+
+
+restaurante.mostrar_datos()
